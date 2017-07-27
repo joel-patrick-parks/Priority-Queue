@@ -1,0 +1,258 @@
+Joel Parks - jpp63
+SE 320 Assignment 2
+November 21, 2016
+
++--------------+
+| Introduction |
++--------------+
+
+This is the README for Assignment 2 of SE 320. Within this file are instructions on how to run the program (as well as the tests), discussion about the tests and EclEmma/JaCoCo code coverage data, and the files that are included in the 
+Assignment 2 Submission.
+
+*Note about testing - I was slightly confused on whether or not we were required to use the gradle scaffolding provided. At one point in the assignment, it says "notably, the output of the gradle command above is how we will grade you", but 
+at another place in the assignment instructions, it says "You aren’t required to use the provided gradle infrastructure, but if you’re otherwise unsure of how to manage your tests, we encourage you to try it". Either way, I spent several 
+hours trying to get the gradle scaffolding included to work, but was unable to do so. Because of this, I included the ouput that I exported from Eclipse from the EclEmma/JaCoCo plugin with the rest of the files for the project.
+
++------------------------+
+| Folders/Files Included |
++------------------------+
+
+Test Coverage (Folder) - This folder contains the data gathered from running the EclEmma/JaCoCo code coverage tool in Eclipse, including the code coverage percentages.
+PriorityQueue (Folder) - This folder contains the java source files for the program, as well as the test files for the program.
+
++-------------------------------+
+| Running the Program and Tests |
++-------------------------------+
+
+All testing was done using JUnit in Eclipse, with the code coverage data gathered by using the EclEmma/JaCoCo plugin for Eclipse. First, you must import the program into Eclipse. Open Eclipse and go to File->Import->Existing Projects into 
+Workspace, and navigate to where you stored the PriorityQueue folder. Select that folder to import. To run the program, simply open the PriorityQueueMain file and hit the 'Run' button. This will compile the code and run the program. To run 
+the tests, open the PriorityQueueMainTest file, hit the dropdown arrow next to the 'Run' button, hover over the 'Run As' option, and select the 'JUnit Test' option. This will run the test cases for the program.
+
++-----------------------------+
+| Using the Program and Tests |
++-----------------------------+
+
+When running the program, it will ask the user to enter an integer for how long they want the priority queue to be. After entering the number, the program will create an empty priority queue (all cells set to 'null'), and take the user to the 
+main menu, where the user can choose what they want to do next, whether it's get the max cell value, extract the max cell, insert a value and key pair, view the priority queue, or quit the program.
+
+When running the tests, only 1 test requires user input, the testMainMenu() test function. This is required when testing if the user select 'insert' at the main menu; other than that, none of the other tests require user interaction.
+
++------------------+
+| Whitebox Testing |
++------------------+
+
+For whitebox testing, I created a test case method for each method used in the PriorityQueueMain file. The code coverage that EclEmma/JaCoCo gave the program was 93.1% code coverage. The missing 6.9% code coverage comes from two if 
+statements that I couldn't get to test in the mainMenu() function, as well as not being sure how to test the few things in the main function (such as Scanners and printing to the console). Other than those two instances, the rest of the code 
+is covered.
+
++------------------+
+| Blackbox Testing |
++------------------+
+
+Test 1: Entering string instead of int for length of the queue:
+Console Output:
+Enter the length of the Priority Queue (must be greater than 1): 
+string
+Invalid input...
+Enter the length of the Priority Queue (must be greater than 1): 
+5
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command:
+----------------------------------------------------------------------------------------------------------------------
+Test 2: Printing Queue with all cells null:
+Console Output:
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command: 
+queue
+| null | null | null | null | 
+----------------------------------------------------------------------------------------------------------------------
+Test 3: Inserting 4 elements into the queue
+Console Output:
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command: 
+insert
+Enter an element to insert: 
+a
+Enter the key of the element: 
+6
+| a | null | null | null | 
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command: 
+insert
+Enter an element to insert: 
+b
+Enter the key of the element: 
+1
+| b | a | null | null | 
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command: 
+insert
+Enter an element to insert: 
+c
+Enter the key of the element: 
+9
+| b | a | c | null | 
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command: 
+insert
+Enter an element to insert: 
+d
+Enter the key of the element: 
+2
+| b | d | c | a | 
+----------------------------------------------------------------------------------------------------------------------
+Test 4: Getting the max element in the queue:
+Console Output:
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command: 
+maximum
+Max Key: b
+----------------------------------------------------------------------------------------------------------------------
+Test 5: Extracting the max element in the queue:
+Console Output:
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command: 
+extractmax
+Max Key: b
+| d | a | c | null | 
+----------------------------------------------------------------------------------------------------------------------
+Test 6: Printing the current queue to console:
+Console Output:
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command: 
+queue
+| d | a | c | null | 
+----------------------------------------------------------------------------------------------------------------------
+Test 7: Extracting all values from the queue:
+Console Output:
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command: 
+extractmax
+Max Key: d
+| a | null | c | null | 
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command: 
+extractmax
+Max Key: a
+| c | null | null | null | 
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command: 
+extractmax
+Max Key: c
+| null | null | null | null | 
+----------------------------------------------------------------------------------------------------------------------
+Test 8: Extracting value from queue when all values are null:
+Console Output:
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command: 
+extractmax
+Max Key: null
+| null | null | null | null |
+----------------------------------------------------------------------------------------------------------------------
+Test 9: Inserting element to the queue when the queue is full:
+Console Output:
+| a | b | c | d | 
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command: 
+insert
+Enter an element to insert: 
+e
+Enter the key of the element: 
+5
+| a | b | c | d | 
+----------------------------------------------------------------------------------------------------------------------
+Test 10: Quitting the program:
+Console Output:
+Main Menu: 
+maximum
+extractmax
+insert
+queue
+quit
+Enter a command: 
+quit
+Closing Priority Queue...
+
++------+
+| Bugs |
++------+
+
+The only bug that I was able to find in the program that was not fixed was if a user enters an integer value that's to low (ie. a negative number or 0) for the length of the Priority Queue. I was having some trouble getting that to work in 
+conjunction with making sure that the user was entering actual integers instead of stringw or random characters.
+
++-----------------------+
+| Viewing Code Coverage |
++-----------------------+
+
+To view the code coverage statistics and in-depth analysis, navigate to the 'Test Coverage' folder that was included with the submission and open the 'index' document in your web browser. There it will show you the overall coverage and allow 
+you to navigate down to lower levels to see the actual code coverage for each file in the program.

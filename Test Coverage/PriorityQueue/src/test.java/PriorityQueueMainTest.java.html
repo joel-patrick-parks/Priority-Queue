@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>PriorityQueueMainTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">PriorityQueueMainTest (Nov 21, 2016 2:54:01 PM)</a> &gt; <a href="../../index.html" class="el_group">PriorityQueue</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">test.java</a> &gt; <span class="el_source">PriorityQueueMainTest.java</span></div><h1>PriorityQueueMainTest.java</h1><pre class="source lang-java linenums">package test.java;
+import java.util.Scanner;
+
+import main.java.PriorityQueueMain;
+import junit.framework.TestCase;
+
+
+<span class="fc" id="L8">public class PriorityQueueMainTest extends TestCase {</span>
+
+	/***************************************************************
+	 * Method: testQueueArrayLength                                *
+	 * Tests if array length is the same as the length it is given *
+	 **************************************************************/
+	public void testQueueArrayLength() {
+<span class="fc" id="L15">		int i = 5;</span>
+<span class="fc" id="L16">		PriorityQueueMain pq = new PriorityQueueMain(i);</span>
+		
+<span class="fc" id="L18">		assertEquals(i, pq.queueArrayLength());</span>
+<span class="fc" id="L19">	}</span>
+	
+	/*********************************************************************
+	 * Method: testQueueArrayGetValue                                    *
+	 * Tests if array value is what is expected after initializing array *
+	 ********************************************************************/
+	public void testQueueArrayGetValue() {
+<span class="fc" id="L26">		int i = 5;</span>
+<span class="fc" id="L27">		PriorityQueueMain pq = new PriorityQueueMain(i);</span>
+		
+<span class="fc" id="L29">		assertEquals(null, pq.queueArrayGetValue(2));</span>
+<span class="fc" id="L30">	}</span>
+	
+	/*********************************************************************
+	 * Method: testQueueArrayGetKey                                      *
+	 * Tests if array value is what is expected after initializing array *
+	 ********************************************************************/
+	public void testQueueArrayGetKey() {
+<span class="fc" id="L37">		int i = 5;</span>
+<span class="fc" id="L38">		PriorityQueueMain pq = new PriorityQueueMain(i);</span>
+		
+<span class="fc" id="L40">		assertEquals(null, pq.queueArrayGetKey(2));</span>
+<span class="fc" id="L41">	}</span>
+	
+	/**************************************************************
+	 * Method: testQueueArraySetKeyValue                          *
+	 * Tests if value was stored in the correct cell in the array *
+	 *************************************************************/
+	public void testQueueArraySetKeyValue(){
+<span class="fc" id="L48">		int i = 5;</span>
+<span class="fc" id="L49">		String value = &quot;value&quot;;</span>
+<span class="fc" id="L50">		String key = &quot;1&quot;;</span>
+<span class="fc" id="L51">		PriorityQueueMain pq = new PriorityQueueMain(i);</span>
+		
+<span class="fc" id="L53">		pq.queueArraySetKeyValue(3, key, value);</span>
+		
+<span class="fc" id="L55">		assertEquals(value, pq.queueArrayGetValue(3));</span>
+<span class="fc" id="L56">	}</span>
+	
+	/******************************************************
+	 * Method: testLessThan                               *
+	 * Tests if the second element is less than the first *
+	 *****************************************************/
+	public void testLessThan() {
+<span class="fc" id="L63">		int i = 3;</span>
+<span class="fc" id="L64">		String a = &quot;value one&quot;; </span>
+<span class="fc" id="L65">		String b = &quot;value two&quot;;</span>
+<span class="fc" id="L66">		String k1 = &quot;1&quot;;</span>
+<span class="fc" id="L67">		String k2 = &quot;2&quot;;</span>
+<span class="fc" id="L68">		PriorityQueueMain pq0 = new PriorityQueueMain(i);</span>
+<span class="fc" id="L69">		PriorityQueueMain pq1 = new PriorityQueueMain(i);</span>
+<span class="fc" id="L70">		PriorityQueueMain pq2 = new PriorityQueueMain(i);</span>
+		
+<span class="fc" id="L72">		pq0.queueArraySetKeyValue(1, k1, a);</span>
+<span class="fc" id="L73">		pq0.queueArraySetKeyValue(2, k2, b);</span>
+<span class="fc" id="L74">		pq1.queueArraySetKeyValue(2, k1, a);</span>
+<span class="fc" id="L75">		pq1.queueArraySetKeyValue(1, k2, b);</span>
+<span class="fc" id="L76">		pq2.queueArraySetKeyValue(1, k1, a);</span>
+<span class="fc" id="L77">		pq2.queueArraySetKeyValue(2, k1, b);</span>
+		
+<span class="fc" id="L79">		assertFalse(pq0.lessThan(2, 1));</span>
+<span class="fc" id="L80">		assertTrue(pq1.lessThan(2, 1));</span>
+<span class="fc" id="L81">		assertFalse(pq2.lessThan(2, 1));</span>
+<span class="fc" id="L82">	}</span>
+	
+	/**********************************************************
+	 * Method: testCompareLeaf                                *
+	 * Tests if the k element is greater than the k/2 element *
+	 * If it is, swap the elements
+	 *********************************************************/
+	public void testCompareLeaf() {
+<span class="fc" id="L90">		int i = 3;</span>
+<span class="fc" id="L91">		String a = &quot;value one&quot;; </span>
+<span class="fc" id="L92">		String b = &quot;value two&quot;;</span>
+<span class="fc" id="L93">		String k1 = &quot;1&quot;;</span>
+<span class="fc" id="L94">		String k2 = &quot;2&quot;;</span>
+<span class="fc" id="L95">		PriorityQueueMain pq = new PriorityQueueMain(i);</span>
+		
+<span class="fc" id="L97">		pq.queueArraySetKeyValue(2, k1, a);</span>
+<span class="fc" id="L98">		pq.queueArraySetKeyValue(1, k2, b);</span>
+		
+<span class="fc" id="L100">		pq.compareLeaf(2);</span>
+		
+<span class="fc" id="L102">		assertEquals(a, pq.queueArrayGetValue(1));</span>
+<span class="fc" id="L103">		assertEquals(b, pq.queueArrayGetValue(2));</span>
+<span class="fc" id="L104">	}</span>
+	
+	/******************************************************************************************
+	 * Method: testInsert                                                                     *
+	 * Tests inserting an element into the array and checks that the cell holds the right key *
+	 *****************************************************************************************/
+	public void testInsert() {
+<span class="fc" id="L111">		int i = 5;</span>
+<span class="fc" id="L112">		String a = &quot;test value&quot;, b = &quot;some value&quot;, c = &quot;another value&quot;, d = &quot;final value&quot;;</span>
+<span class="fc" id="L113">		String k1 = &quot;1&quot;, k2 = &quot;2&quot;, k3 = &quot;3&quot;, k4 = &quot;4&quot;;</span>
+<span class="fc" id="L114">		PriorityQueueMain pq = new PriorityQueueMain(i);</span>
+		
+<span class="fc" id="L116">		pq.insert(k3, a);</span>
+<span class="fc" id="L117">		pq.insert(k1, b);</span>
+<span class="fc" id="L118">		pq.insert(k4, c);</span>
+<span class="fc" id="L119">		pq.insert(k2, d);</span>
+		
+<span class="fc" id="L121">		assertEquals(null, pq.queueArrayGetValue(0));</span>
+<span class="fc" id="L122">		assertEquals(b, pq.queueArrayGetValue(1));</span>
+<span class="fc" id="L123">		assertEquals(d, pq.queueArrayGetValue(2));</span>
+<span class="fc" id="L124">		assertEquals(c, pq.queueArrayGetValue(3));</span>
+<span class="fc" id="L125">		assertEquals(a, pq.queueArrayGetValue(4));</span>
+<span class="fc" id="L126">	}</span>
+	
+	/*************************************************************************************
+	 * Method: testMaximum                                                               *
+	 * Tests returning the element in the queue with the largest key (the first element) *
+	 ************************************************************************************/
+	public void testMaximum(){
+<span class="fc" id="L133">		int i = 5;</span>
+<span class="fc" id="L134">		String a = &quot;test value&quot;, b = &quot;some value&quot;, c = &quot;another value&quot;, d = &quot;final value&quot;;</span>
+<span class="fc" id="L135">		String k1 = &quot;1&quot;, k2 = &quot;2&quot;, k3 = &quot;3&quot;, k4 = &quot;4&quot;;</span>
+<span class="fc" id="L136">		PriorityQueueMain pq = new PriorityQueueMain(i);</span>
+		
+<span class="fc" id="L138">		pq.insert(k3, a);</span>
+<span class="fc" id="L139">		pq.insert(k1, b);</span>
+<span class="fc" id="L140">		pq.insert(k4, c);</span>
+<span class="fc" id="L141">		pq.insert(k2, d);</span>
+		
+<span class="fc" id="L143">		assertEquals(pq.queueArrayGetValue(1), pq.maximum());</span>
+<span class="fc" id="L144">	}</span>
+	
+	/**************************************************************************
+	 * Method: testRemove                                                     *
+	 * Tests removing the first element from the array and setting it to null *
+	 *************************************************************************/
+	public void testRemove(){
+<span class="fc" id="L151">		int i = 5;</span>
+<span class="fc" id="L152">		String a = &quot;test value&quot;, b = &quot;some value&quot;, c = &quot;another value&quot;, d = &quot;final value&quot;;</span>
+<span class="fc" id="L153">		String k1 = &quot;1&quot;, k2 = &quot;2&quot;, k3 = &quot;3&quot;, k4 = &quot;4&quot;;</span>
+<span class="fc" id="L154">		PriorityQueueMain pq = new PriorityQueueMain(i);</span>
+		
+<span class="fc" id="L156">		pq.insert(k3, a);</span>
+<span class="fc" id="L157">		pq.insert(k1, b);</span>
+<span class="fc" id="L158">		pq.insert(k4, c);</span>
+<span class="fc" id="L159">		pq.insert(k2, d);</span>
+<span class="fc" id="L160">		pq.remove();</span>
+		
+<span class="fc" id="L162">		assertEquals(null, pq.queueArrayGetValue(1));</span>
+<span class="fc" id="L163">	}</span>
+	
+	/***************************************************************
+	 * Method: testMove                                            *
+	 * Tests moving the higher value child to the null parent cell *
+	 **************************************************************/
+	public void testMove(){
+<span class="fc" id="L170">		int i = 9, k = 4;</span>
+<span class="fc" id="L171">		String a = &quot;test value&quot;, b = &quot;some value&quot;, c = &quot;another value&quot;, d = &quot;random value&quot;, e = &quot;simple value&quot;, f = &quot;complex value&quot;, g = &quot;crooked value&quot;, h = &quot;linear value&quot;;</span>
+<span class="fc" id="L172">		String k1 = &quot;1&quot;, k2 = &quot;2&quot;, k3 = &quot;3&quot;, k4 = &quot;4&quot;, k5 = &quot;5&quot;, k6 = &quot;6&quot;, k7 = &quot;7&quot;, k8 = &quot;8&quot;;</span>
+		
+<span class="fc" id="L174">		PriorityQueueMain pq = new PriorityQueueMain(i);</span>
+<span class="fc" id="L175">		PriorityQueueMain pq1 = new PriorityQueueMain(k);</span>
+<span class="fc" id="L176">		PriorityQueueMain pq2 = new PriorityQueueMain(k);</span>
+		
+<span class="fc" id="L178">		pq1.insert(k1, a);</span>
+		
+<span class="fc" id="L180">		pq1.remove();</span>
+<span class="fc" id="L181">		pq1.move();</span>
+		
+<span class="fc" id="L183">		assertEquals(null, pq1.queueArrayGetKey(1));</span>
+		
+<span class="fc" id="L185">		pq1.insert(k1, a);</span>
+<span class="fc" id="L186">		pq1.insert(k2, b);</span>
+		
+<span class="fc" id="L188">		pq1.remove();</span>
+<span class="fc" id="L189">		pq1.move();</span>
+		
+<span class="fc" id="L191">		assertEquals(k2, pq1.queueArrayGetKey(1));</span>
+<span class="fc" id="L192">		assertEquals(null, pq1.queueArrayGetKey(2));</span>
+		
+<span class="fc" id="L194">		pq2.queueArraySetKeyValue(1, k1, a);</span>
+<span class="fc" id="L195">		pq2.queueArraySetKeyValue(3, k2, b);</span>
+		
+<span class="fc" id="L197">		pq2.remove();</span>
+<span class="fc" id="L198">		pq2.move();</span>
+		
+<span class="fc" id="L200">		assertEquals(k2, pq2.queueArrayGetKey(1));</span>
+<span class="fc" id="L201">		assertEquals(null, pq2.queueArrayGetKey(3));</span>
+		
+<span class="fc" id="L203">		pq.insert(k5, d);</span>
+<span class="fc" id="L204">		pq.insert(k2, a);</span>
+<span class="fc" id="L205">		pq.insert(k8, b);</span>
+<span class="fc" id="L206">		pq.insert(k1, c);</span>
+<span class="fc" id="L207">		pq.insert(k3, g);</span>
+<span class="fc" id="L208">		pq.insert(k7, e);</span>
+<span class="fc" id="L209">		pq.insert(k6, h);</span>
+<span class="fc" id="L210">		pq.insert(k4, f);</span>
+		
+<span class="fc" id="L212">		pq.remove();</span>
+<span class="fc" id="L213">		pq.move();</span>
+		
+<span class="fc" id="L215">		assertEquals(k2, pq.queueArrayGetKey(1));</span>
+<span class="fc" id="L216">		assertEquals(k3, pq.queueArrayGetKey(2));</span>
+<span class="fc" id="L217">		assertEquals(k6, pq.queueArrayGetKey(3));</span>
+<span class="fc" id="L218">		assertEquals(k4, pq.queueArrayGetKey(4));</span>
+<span class="fc" id="L219">		assertEquals(null, pq.queueArrayGetKey(5));</span>
+<span class="fc" id="L220">		assertEquals(k8, pq.queueArrayGetKey(6));</span>
+<span class="fc" id="L221">		assertEquals(k7, pq.queueArrayGetKey(7));</span>
+<span class="fc" id="L222">		assertEquals(k5, pq.queueArrayGetKey(8));</span>
+<span class="fc" id="L223">	}</span>
+	
+	/*******************************************************************************************************
+	 * Method: testExtractMax                                                                              *
+	 * Tests returning the highest key, removing the highest key, and then reorganizing the Priority Queue *
+	 *******************************************************************************************************/
+	public void testExtractMax(){
+<span class="fc" id="L230">		int i = 9;</span>
+		String highestKey, removedHighestKey;
+<span class="fc" id="L232">		String a = &quot;test value&quot;, b = &quot;some value&quot;, c = &quot;another value&quot;, d = &quot;random value&quot;, e = &quot;simple value&quot;, f = &quot;complex value&quot;, g = &quot;crooked value&quot;, h = &quot;linear value&quot;;</span>
+<span class="fc" id="L233">		String k1 = &quot;1&quot;, k2 = &quot;2&quot;, k3 = &quot;3&quot;, k4 = &quot;4&quot;, k5 = &quot;5&quot;, k6 = &quot;6&quot;, k7 = &quot;7&quot;, k8 = &quot;8&quot;;</span>
+		
+<span class="fc" id="L235">		PriorityQueueMain pq = new PriorityQueueMain(i);</span>
+		
+<span class="fc" id="L237">		pq.insert(k5, d);</span>
+<span class="fc" id="L238">		pq.insert(k2, a);</span>
+<span class="fc" id="L239">		pq.insert(k8, b);</span>
+<span class="fc" id="L240">		pq.insert(k1, c);</span>
+<span class="fc" id="L241">		pq.insert(k3, g);</span>
+<span class="fc" id="L242">		pq.insert(k7, e);</span>
+<span class="fc" id="L243">		pq.insert(k6, h);</span>
+<span class="fc" id="L244">		pq.insert(k4, f);</span>
+		
+<span class="fc" id="L246">		highestKey = pq.queueArrayGetValue(1);</span>
+<span class="fc" id="L247">		removedHighestKey = pq.extractMax();</span>
+		
+<span class="fc" id="L249">		assertEquals(highestKey, removedHighestKey);</span>
+		
+<span class="fc" id="L251">		assertEquals(k2, pq.queueArrayGetKey(1));</span>
+<span class="fc" id="L252">		assertEquals(k3, pq.queueArrayGetKey(2));</span>
+<span class="fc" id="L253">		assertEquals(k6, pq.queueArrayGetKey(3));</span>
+<span class="fc" id="L254">		assertEquals(k4, pq.queueArrayGetKey(4));</span>
+<span class="fc" id="L255">		assertEquals(null, pq.queueArrayGetKey(5));</span>
+<span class="fc" id="L256">		assertEquals(k8, pq.queueArrayGetKey(6));</span>
+<span class="fc" id="L257">		assertEquals(k7, pq.queueArrayGetKey(7));</span>
+<span class="fc" id="L258">		assertEquals(k5, pq.queueArrayGetKey(8));</span>
+<span class="fc" id="L259">	}</span>
+	
+	/*******************************************************************************
+	 * Method: testMainMenu                                                        *
+	 * Tests returning the correct boolean opperand based on the input of the user *
+	 ******************************************************************************/
+	public void testMainMenu(){
+<span class="fc" id="L266">		int i = 5;</span>
+<span class="fc" id="L267">		Scanner scan = new Scanner(System.in);</span>
+<span class="fc" id="L268">		String a = &quot;test value&quot;, b = &quot;some value&quot;, c = &quot;another value&quot;, d = &quot;final value&quot;;</span>
+<span class="fc" id="L269">		String k1 = &quot;1&quot;, k2 = &quot;2&quot;, k3 = &quot;3&quot;, k4 = &quot;4&quot;;</span>
+<span class="fc" id="L270">		String emax = &quot;extractmax&quot;, max = &quot;maximum&quot;, insert = &quot;insert&quot;, queue = &quot;queue&quot;, quit = &quot;quit&quot;, rand = &quot;kjdksjd&quot;;</span>
+<span class="fc" id="L271">		PriorityQueueMain pq = new PriorityQueueMain(i);</span>
+		
+<span class="fc" id="L273">		pq.insert(k3, a);</span>
+<span class="fc" id="L274">		pq.insert(k1, b);</span>
+<span class="fc" id="L275">		pq.insert(k4, c);</span>
+<span class="fc" id="L276">		pq.insert(k2, d);</span>
+		
+<span class="fc" id="L278">		assertTrue(pq.mainMenu(emax, pq, scan));</span>
+<span class="fc" id="L279">		assertTrue(pq.mainMenu(max, pq, scan));</span>
+<span class="fc" id="L280">		assertTrue(pq.mainMenu(insert, pq, scan));</span>
+<span class="fc" id="L281">		assertTrue(pq.mainMenu(queue, pq, scan));</span>
+<span class="fc" id="L282">		assertFalse(pq.mainMenu(quit, pq, scan));</span>
+<span class="fc" id="L283">		assertTrue(pq.mainMenu(rand, pq, scan));</span>
+<span class="fc" id="L284">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>PriorityQueueMainTest (Nov 21, 2016 2:54:01 PM)</div></body></html>

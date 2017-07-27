@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>PriorityQueueMain.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">PriorityQueueMainTest (Nov 21, 2016 2:54:01 PM)</a> &gt; <a href="../../index.html" class="el_group">PriorityQueue</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">main.java</a> &gt; <span class="el_source">PriorityQueueMain.java</span></div><h1>PriorityQueueMain.java</h1><pre class="source lang-java linenums">package main.java;
+
+import java.util.Scanner;
+
+public class PriorityQueueMain {
+	private String[][] queueArray;
+	
+<span class="fc" id="L8">	public PriorityQueueMain(int length){</span>
+<span class="fc" id="L9">		this.queueArray = new String[length][2];</span>
+<span class="fc" id="L10">	}</span>
+	
+	/***********************************
+	 * Method: queueArrayLength        *
+	 * Returns the length of the array *
+	 **********************************/
+	public int queueArrayLength(){
+<span class="fc" id="L17">		return queueArray.length;</span>
+	}
+	
+	/***********************************
+	 * Method: queueArraySetKeyValue   *
+	 * Sets queueArray[i][0] to 'key'  *
+	 * Sets queueArray[i][1] to 'value *
+	 **********************************/
+	public void queueArraySetKeyValue(int i, String key, String value){
+<span class="fc" id="L26">		queueArray[i][0] = key;</span>
+<span class="fc" id="L27">		queueArray[i][1] = value;</span>
+<span class="fc" id="L28">	}</span>
+	
+	/*****************************************************
+	 * Method: queueArrayGetValue                        *
+	 * Returns the value of the ith element of the array *
+	 ****************************************************/
+	public String queueArrayGetValue(int i){
+<span class="fc" id="L35">		return queueArray[i][1];</span>
+	}
+	
+	/***************************************************
+	 * Method: queueArrayGetKey                        *
+	 * Returns the key of the ith element of the array *
+	 **************************************************/
+	public String queueArrayGetKey(int i){
+<span class="fc" id="L43">		return queueArray[i][0];</span>
+	}	
+	
+	/****************************************************
+	 * Method: lessThan                                 *
+	 * If leaf is greater than parent return true       *
+	 * Else return false                                *
+	 ***************************************************/
+	public boolean lessThan(int y, int z){
+<span class="fc bfc" id="L52" title="All 2 branches covered.">		return queueArray[y][0].compareTo(queueArray[z][0]) &lt; 0;</span>
+	}
+	
+	/***************************************************
+	 * Method: compareLeaf                             *
+	 * If leaf is greater than parent, exchange values *
+	 ***************************************************/
+	public void compareLeaf(int k){
+<span class="fc bfc" id="L60" title="All 4 branches covered.">		while(k &gt; 1 &amp;&amp; lessThan(k, k/2)){</span>
+<span class="fc" id="L61">			String tempKey = queueArray[k/2][0];</span>
+<span class="fc" id="L62">			String tempVal = queueArray[k/2][1];</span>
+<span class="fc" id="L63">			queueArray[k/2][0] = queueArray[k][0];</span>
+<span class="fc" id="L64">			queueArray[k/2][1] = queueArray[k][1];</span>
+<span class="fc" id="L65">			queueArray[k][0] = tempKey;</span>
+<span class="fc" id="L66">			queueArray[k][1] = tempVal;</span>
+<span class="fc" id="L67">			k = k/2;</span>
+		}
+<span class="fc" id="L69">	}</span>
+	
+	/******************************************
+	 * Method: insert                         *
+	 * Inserts 'key' and 'val' into the array *
+	 *****************************************/
+	public void insert(String key, String val){
+		outerloop:
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		for(int i = 1; i &lt; queueArray.length; i++){</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">			if(queueArray[i][0] == null){</span>
+<span class="fc" id="L79">				queueArray[i][0] = key;</span>
+<span class="fc" id="L80">				queueArray[i][1] = val;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">				if(i != 1){</span>
+<span class="fc" id="L82">					compareLeaf(i);</span>
+				}
+<span class="fc" id="L84">				break outerloop;</span>
+			}
+		}
+<span class="fc" id="L87">	}</span>
+	
+	/*********************************************************
+	 * Method: maximum                                       *
+	 * Returns the element of the queue with the largest key *
+	 ********************************************************/
+	public String maximum(){
+<span class="fc" id="L94">		return queueArray[1][1];</span>
+	}
+	
+	/*************************************************************************
+	 * Method: remove                                                        *
+	 * Removes the first element from the Priority Queue and sets it to null *
+	 ************************************************************************/
+	public void remove(){
+<span class="fc" id="L102">		queueArray[1][0] = null;</span>
+<span class="fc" id="L103">		queueArray[1][1] = null;</span>
+<span class="fc" id="L104">	}</span>
+	
+	/****************************************************************************************
+	 * Method: move                                                                         *
+	 * Finds a key set to null, compares children, and moves the larger key to the null key *
+	 ***************************************************************************************/
+	public void move(){
+		int y, z;
+		
+<span class="pc bpc" id="L113" title="1 of 6 branches missed.">		if(queueArrayGetValue(1) == null &amp;&amp; (queueArrayGetValue(2) == null || queueArrayGetValue(3) == null)){</span>
+<span class="fc bfc" id="L114" title="All 4 branches covered.">			if(queueArrayGetValue(2) == null &amp;&amp; queueArrayGetValue(3) != null){</span>
+<span class="fc" id="L115">				queueArraySetKeyValue(1, queueArrayGetKey(3), queueArrayGetValue(3));</span>
+<span class="fc" id="L116">				queueArraySetKeyValue(3, null, null);</span>
+<span class="pc bpc" id="L117" title="1 of 4 branches missed.">			}else if(queueArrayGetValue(2) != null &amp;&amp; queueArrayGetValue(3) == null){</span>
+<span class="fc" id="L118">				queueArraySetKeyValue(1, queueArrayGetKey(2), queueArrayGetValue(2));</span>
+<span class="fc" id="L119">				queueArraySetKeyValue(2, null, null);</span>
+			}
+<span class="fc" id="L121">		}else{</span>
+			outerloop:
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">			for(int i = 1; i &lt; queueArrayLength(); i++){</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">				if(queueArrayGetValue(i) == null){</span>
+<span class="fc" id="L125">					y = i * 2;</span>
+<span class="fc" id="L126">					z = i * 2 + 1;</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">					if(y &gt;= queueArrayLength()){</span>
+<span class="fc" id="L128">						break outerloop;</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">					}else if(z &gt;= queueArrayLength()){</span>
+<span class="fc" id="L130">						queueArraySetKeyValue(i, queueArrayGetKey(y), queueArrayGetValue(y));</span>
+<span class="fc" id="L131">						queueArraySetKeyValue(y, null, null);</span>
+<span class="fc" id="L132">						break outerloop;</span>
+					}else{
+<span class="fc bfc" id="L134" title="All 2 branches covered.">						if(lessThan(y,z)){</span>
+<span class="fc" id="L135">							queueArraySetKeyValue(i, queueArrayGetKey(y), queueArrayGetValue(y));</span>
+<span class="fc" id="L136">							queueArraySetKeyValue(y, null, null);</span>
+<span class="fc" id="L137">						}else{</span>
+<span class="fc" id="L138">							queueArraySetKeyValue(i, queueArrayGetKey(z), queueArrayGetValue(z));</span>
+<span class="fc" id="L139">							queueArraySetKeyValue(z, null, null);</span>
+						}
+					}
+				}
+			}
+		}
+<span class="fc" id="L145">	}</span>
+	
+	/************************************************************************************************
+	 * Method: extractMax                                                                           *
+	 * Returns the element of the queue with the largest key and removes it from the Priority Queue *
+	 ***********************************************************************************************/
+	public String extractMax(){
+<span class="fc" id="L152">		String maxValue = queueArray[1][1];</span>
+		
+<span class="fc" id="L154">		remove();</span>
+<span class="fc" id="L155">		move();</span>
+		
+<span class="fc" id="L157">		return maxValue;</span>
+	}
+	
+	public boolean mainMenu(String command, PriorityQueueMain pq, Scanner scan){
+<span class="fc" id="L161">		String element, key, maxKey, queue = &quot;| &quot;;</span>
+		
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		if(command.toLowerCase().equals(&quot;maximum&quot;)){</span>
+<span class="fc" id="L164">			maxKey = pq.maximum();</span>
+<span class="fc" id="L165">			System.out.println(&quot;Max Key: &quot; + maxKey);</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		}else if(command.toLowerCase().equals(&quot;extractmax&quot;)){</span>
+<span class="fc" id="L167">			maxKey = pq.extractMax();</span>
+<span class="fc" id="L168">			System.out.println(&quot;Max Key: &quot; + maxKey);</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">			for(int i = 1; i &lt; pq.queueArrayLength(); i++){</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">				if(pq.queueArrayGetValue(i) == null){</span>
+<span class="fc" id="L171">					queue = queue.concat(&quot;null&quot;);</span>
+<span class="fc" id="L172">					queue = queue.concat(&quot; | &quot;);</span>
+<span class="fc" id="L173">				}else{</span>
+<span class="fc" id="L174">					queue = queue.concat(pq.queueArrayGetValue(i));</span>
+<span class="fc" id="L175">					queue = queue.concat(&quot; | &quot;);</span>
+				}
+			}
+<span class="fc" id="L178">			System.out.println(queue);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		}else if(command.toLowerCase().equals(&quot;insert&quot;)){</span>
+<span class="fc" id="L180">			System.out.println(&quot;Enter an element to insert: &quot;);</span>
+<span class="fc" id="L181">			element = scan.nextLine();</span>
+<span class="fc" id="L182">			System.out.println(&quot;Enter the key of the element: &quot;);</span>
+<span class="fc" id="L183">			key = scan.nextLine();</span>
+<span class="fc" id="L184">			pq.insert(key, element);</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">			for(int i = 1; i &lt; pq.queueArrayLength(); i++){</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">				if(pq.queueArrayGetValue(i) == null){</span>
+<span class="nc" id="L187">					queue = queue.concat(&quot;null&quot;);</span>
+<span class="nc" id="L188">					queue = queue.concat(&quot; | &quot;);</span>
+<span class="nc" id="L189">				}else{</span>
+<span class="fc" id="L190">					queue = queue.concat(pq.queueArrayGetValue(i));</span>
+<span class="fc" id="L191">					queue = queue.concat(&quot; | &quot;);</span>
+				}
+			}
+<span class="fc" id="L194">			System.out.println(queue);</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">		}else if(command.toLowerCase().equals(&quot;queue&quot;)){</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">			for(int i = 1; i &lt; pq.queueArrayLength(); i++){</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">				if(pq.queueArrayGetValue(i) == null){</span>
+<span class="nc" id="L198">					queue = queue.concat(&quot;null&quot;);</span>
+<span class="nc" id="L199">					queue = queue.concat(&quot; | &quot;);</span>
+<span class="nc" id="L200">				}else{</span>
+<span class="fc" id="L201">					queue = queue.concat(pq.queueArrayGetValue(i));</span>
+<span class="fc" id="L202">					queue = queue.concat(&quot; | &quot;);</span>
+				}
+			}
+<span class="fc" id="L205">			System.out.println(queue);</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		}else if(command.toLowerCase().equals(&quot;quit&quot;)){</span>
+<span class="fc" id="L207">			System.out.println(&quot;Closing Priority Queue...&quot;);</span>
+<span class="fc" id="L208">			return false;</span>
+		}else{
+<span class="fc" id="L210">			System.out.println(&quot;Invalid Command...&quot;);</span>
+		}
+<span class="fc" id="L212">		queue = &quot;| &quot;;</span>
+		
+<span class="fc" id="L214">		return true;</span>
+	}
+	
+	/********************
+	 * Method: main     *
+	 * Runs the program *
+	 *******************/
+	public static void main(String[] args){
+<span class="nc" id="L222">		Scanner scan = new Scanner(System.in);</span>
+<span class="nc" id="L223">		int priorityQueueLength = 0;</span>
+<span class="nc" id="L224">		PriorityQueueMain pq = null;</span>
+		String buffer, command;
+<span class="nc" id="L226">		boolean results = true;</span>
+		
+<span class="nc" id="L228">		System.out.println(&quot;Enter the length of the Priority Queue (must be greater than 1): &quot;);</span>
+		
+<span class="nc bnc" id="L230" title="All 2 branches missed.">		while(!scan.hasNextInt()){</span>
+<span class="nc" id="L231">			System.out.println(&quot;Invalid input...&quot;);</span>
+<span class="nc" id="L232">			scan.next();</span>
+<span class="nc" id="L233">			System.out.println(&quot;Enter the length of the Priority Queue (must be greater than 1): &quot;);</span>
+		}
+		
+<span class="nc" id="L236">		priorityQueueLength = scan.nextInt();</span>
+		
+<span class="nc" id="L238">		buffer = scan.nextLine();</span>
+<span class="nc" id="L239">		pq = new PriorityQueueMain(priorityQueueLength);</span>
+		
+<span class="nc bnc" id="L241" title="All 2 branches missed.">		while(results){</span>
+<span class="nc" id="L242">			System.out.println(&quot;Main Menu: &quot;);</span>
+<span class="nc" id="L243">			System.out.println(&quot;maximum&quot;);</span>
+<span class="nc" id="L244">			System.out.println(&quot;extractmax&quot;);</span>
+<span class="nc" id="L245">			System.out.println(&quot;insert&quot;);</span>
+<span class="nc" id="L246">			System.out.println(&quot;queue&quot;);</span>
+<span class="nc" id="L247">			System.out.println(&quot;quit&quot;);</span>
+<span class="nc" id="L248">			System.out.println(&quot;Enter a command: &quot;);</span>
+<span class="nc" id="L249">			command = scan.nextLine();</span>
+			
+<span class="nc" id="L251">			results = pq.mainMenu(command, pq, scan);</span>
+		}
+<span class="nc" id="L253">		scan.close();</span>
+<span class="nc" id="L254">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>PriorityQueueMainTest (Nov 21, 2016 2:54:01 PM)</div></body></html>
